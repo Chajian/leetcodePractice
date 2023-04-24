@@ -16,7 +16,7 @@ public class testPrimeAttribute {
     @Test
     public void test(){
         List list = Prime.primes(27);
-        String a ="acacacvnvnvnsdfasdzzzzzzz";
+        String a ="acacacvnvnvnsdfasdzzzzzzzzzzzzzzzzzzzzzzzzz";
         String b ="dsafdsnvnvnvcacacazzzzzzzzzzzzzzzzz";
         long aa=0,bb=0;
         aa = Prime.StringtoLongByMultiply(list,a);
