@@ -14,36 +14,26 @@ public class a30 {
         List list = new ArrayList();
         List<Integer> nums = primes(26);
         StringBuilder wordsBuilder = new StringBuilder();
-        HashMap<String,Integer> map = new HashMap<>();
         for(String s1:words){
-            map.put(s1,map.getOrDefault(s1,0)+1);
             wordsBuilder.append(s1);
         }
         long wordsNum = StringtoLongByAdd(nums,wordsBuilder.toString());
-        int i = 0,left = i,j=0,wordlen = words[0].length(),wordslen = wordlen*words.length;
-        HashMap<String,Integer> temp = new HashMap<>();
-        long tempNums = 0;
+        long wordsMul = StringtoLongByMultiply(nums,wordsBuilder.toString());
+        int i = 0,j=0,wordlen = words[0].length(),wordslen = wordlen*words.length;
+        long tempNums = 0,tempMul = 1;
         while(i<=s.length()-wordslen) {
-            if((j-i) < wordslen)
-                tempNums += nums.get(s.charAt(j++)-'a');
+            if((j-i) < wordslen) {
+                tempNums += nums.get(s.charAt(j) - 'a');
+                tempMul *= nums.get(s.charAt(j) - 'a');
+                j++;
+            }
             else{
-                if(tempNums==wordsNum){
-                    for(int t = i ; t < j ; t+=wordlen){
-                        String st = s.substring(t,t+wordlen);
-                        if(!map.containsKey(st)){
-                            i=t;
-                            break;
-                        }
-                        temp.put(st,temp.getOrDefault(st,0)+1);
-                    }
-                    if(temp.equals(map)) {
-                        list.add(i);
-                        temp.clear();
-                    }
+                if(tempNums==wordsNum&&tempMul==wordsMul){
+                    list.add(i);
                 }
-                String st = s.substring(left,i++);
-                tempNums-=StringtoLongByAdd(nums,st);
-                left = i;
+                tempMul /= nums.get(s.charAt(i) - 'a');
+                tempNums -= nums.get(s.charAt(i) - 'a');
+                i++;
             }
         }
         return list;
@@ -70,6 +60,15 @@ public class a30 {
         }
         return l;
     }
+
+    public static long StringtoLongByMultiply(List<Integer> nums,String a){
+        long l = 1;
+        for(char c:a.toCharArray()){
+            l*= (long)nums.get((c-'a'));
+        }
+        return l;
+    }
+
 
     @Test
     public void test(){
